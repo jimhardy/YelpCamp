@@ -72,7 +72,7 @@ app.get('/campgrounds/:id', (req, res) => {
     // render show template with that campground ID
 
 });
-
+// .
 // ==================
 // COMMENTS ROUTES
 // ==================
