@@ -1,0 +1,16 @@
+body {
+    background-color: rgb(240,240,240);
+}
+
+.card-body {
+    padding: 0;
+}
+
+.card-text {
+    padding: 9px;
+}
+
+.text-right {
+    padding-right: 9px;
+}
+
