@@ -43,7 +43,7 @@ app.post('/campgrounds', (req, res) => {
         }
         else {
             console.log('Campground added');
-            console.log(campground);
+            // console.log(campground);
             // redirect to GET
             res.redirect('/campgrounds');
         }
@@ -65,7 +65,7 @@ app.get('/campgrounds/:id', (req, res) => {
             console.log(err);
         }
         else {
-            console.log(foundCampground)
+            // console.log(foundCampground)
             res.render('campgrounds/show', { campground: foundCampground });
         }
     })
