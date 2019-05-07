@@ -11,16 +11,16 @@ var express = require('express'),
 
 require('dotenv').config();
 
-// mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true });
+ mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true });
 
 // Mongoose Connect
-mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('mongo connected');
-  }
-});
+// mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log('mongo connected');
+//   }
+// });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 // serve public directory - makes this available when server runs
