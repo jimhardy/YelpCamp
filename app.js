@@ -108,7 +108,7 @@ app.get('/campgrounds/:id', (req, res) => {
 // ==================
 // COMMENTS ROUTES
 // ==================
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn , (req, res) => {
   // find campground by id
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
@@ -182,6 +182,15 @@ app.get('/logout' , (req , res) => {
   res.redirect('/');
 })
 
+// MIDDLEWARE
+// prevent user from adding comment if not logged in isAuth
+
+function isLoggedIn(req , res , next){
+  if(req.isAuthenticated()) {
+  return next();
+  }
+  res.redirect('/login');
+}
 
 // ==================
 // SERVER
