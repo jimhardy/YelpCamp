@@ -1,17 +1,39 @@
-var express = require('express'),
-  app = express(),
-  bodyParser = require('body-parser'),
-  mongoose = require('mongoose'),
-  passport = require('passport'),
-  LocalStrategy = require('passport-local'),
-  Campground = require('./models/campground'),
-  Comment = require('./models/comment'),
-  User = require('./models/user'),
-  seedDB = require('./seeds');
+const express = require('express'),
+bodyParser = require('body-parser'),
+mongoose = require('mongoose'),
+passport = require('passport'),
+LocalStrategy = require('passport-local'),
+passportLocalMongoose = require('passport-local-mongoose'),
+Campground = require('./models/campground'),
+Comment = require('./models/comment'),
+User = require('./models/user'),
+seedDB = require('./seeds');
 
 require('dotenv').config();
 
+const app = express();
+app.set('view engine', 'ejs');
+app.use(
+  require('express-session')({
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false
+    })
+  );
+  app.use(bodyParser.urlencoded({ extended: true }));
+  // serve public directory - makes this available when server runs
+  app.use(express.static(__dirname + '/public'));
+  
+  // PASSPORT CONFIGURATION
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+  
+// ==================
 // MONGOOSE CONNECT
+// ==================
 mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
   if (err) {
     console.log(err);
@@ -20,28 +42,8 @@ mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
   }
 });
 // mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true });
-
-// PASSPORT CONFIGURATION
-app.use(
-  require('express-session')({
-    secret: process.env.SECRET,
-    resave: false,
-    saveUninitialized: false
-  })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-app.use(bodyParser.urlencoded({ extended: true }));
-// serve public directory - makes this available when server runs
-app.use(express.static(__dirname + '/public'));
-app.set('view engine', 'ejs');
 seedDB();
-
+  
 // ==================
 // ROUTES
 // ==================
@@ -150,16 +152,14 @@ app.get('/register', (req, res) => {
 
 // SIGN UP LOGIC
 app.post('/register', (req, res) => {
-  console.log("this is the register route");
-  let newUser = new User({ username: req.body.username });
-  User.register(newUser, req.body.password, (err, user) => {
+  let newUser = new User({username: req.body.username});
+  User.register(newUser , req.body.password , (err, user) => {
     if (err) {
       console.log(err);
-      return res.render('/register');
+      return res.render('register');
     }
     console.log('no err');
-    
-    passport.authenticate('local')(req, res, () => {
+    passport.authenticate('local')(req , res , () => {
       res.redirect('/campgrounds');
     });
   });
