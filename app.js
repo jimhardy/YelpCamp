@@ -158,12 +158,30 @@ app.post('/register', (req, res) => {
       console.log(err);
       return res.render('register');
     }
-    console.log('no err');
     passport.authenticate('local')(req , res , () => {
       res.redirect('/campgrounds');
     });
   });
 });
+
+// LOGIN 
+app.get('/login' , (req , res) => {
+  res.render('login');
+});
+
+// handles login logic using passport.authenticate() middleware
+app.post('/login' , passport.authenticate('local' , {
+  successRedirect: '/campgrounds',
+  failureRedirect: '/login'
+}) , (req , res) => {
+});
+
+// LOGOUT
+app.get('/logout' , (req , res) => {
+  req.logOut();
+  res.redirect('/');
+})
+
 
 // ==================
 // SERVER
