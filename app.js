@@ -173,12 +173,11 @@ app.get('/login' , (req , res) => {
 app.post('/login' , passport.authenticate('local' , {
   successRedirect: '/campgrounds',
   failureRedirect: '/login'
-}) , (req , res) => {
-});
+}));
 
 // LOGOUT
 app.get('/logout' , (req , res) => {
-  req.logOut();
+  req.logout();
   res.redirect('/');
 })
 
