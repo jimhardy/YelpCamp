@@ -31,17 +31,22 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
   
+  app.use((req , res , next) => {
+    res.locals.currentUser = req.user; // whatever we put in res.locals is what is available inside of our template
+    next();
+  })
+  
 // ==================
 // MONGOOSE CONNECT
 // ==================
-mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('mongo connected');
-  }
-});
-// mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true });
+// mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log('mongo connected');
+//   }
+// });
+mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true });
 seedDB();
   
 // ==================
@@ -58,7 +63,7 @@ app.get('/campgrounds', (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.render('campgrounds/index', { campgrounds: allCampgrounds });
+      res.render('campgrounds/index', { campgrounds: allCampgrounds});
     }
   });
 });
@@ -108,7 +113,7 @@ app.get('/campgrounds/:id', (req, res) => {
 // ==================
 // COMMENTS ROUTES
 // ==================
-app.get('/campgrounds/:id/comments/new', isLoggedIn , (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn , (req, res) => { // added isLoggedIn middleware
   // find campground by id
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
@@ -119,7 +124,7 @@ app.get('/campgrounds/:id/comments/new', isLoggedIn , (req, res) => {
   });
 });
 
-app.post('/campgrounds/:id/comments', (req, res) => {
+app.post('/campgrounds/:id/comments', isLoggedIn , (req, res) => { // added isLoggedIn middleware
   // lookup campground using id
   Campground.findById(req.params.id, (err, campground) => {
     if (err) {
