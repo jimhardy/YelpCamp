@@ -57,10 +57,6 @@ mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
   }
 });
 seedDB();
-  
-// ==================
-// ROUTES
-// ==================
 
 // ==================
 // SERVER
