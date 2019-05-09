@@ -40,10 +40,10 @@ passport.deserializeUser(User.deserializeUser());
     next();
   })
   
-  app.use(commentRoutes);
-  app.use(campgroundRoutes);
+  app.use('/campgrounds/:id/comments' , commentRoutes);
+  app.use('/campgrounds/' , campgroundRoutes);
   app.use(indexRoutes);
-  
+
 // ==================
 // MONGOOSE CONNECT
 // ==================

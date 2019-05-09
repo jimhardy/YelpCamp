@@ -6,7 +6,7 @@ const Comment = require('../models/comment');
 // ==================
 // COMMENTS ROUTES
 // ==================
-router.get('/campgrounds/:id/comments/new', isLoggedIn , (req, res) => { // added isLoggedIn middleware
+router.get('/new', isLoggedIn , (req, res) => { // added isLoggedIn middleware
     // find campground by id
     Campground.findById(req.params.id, (err, campground) => {
       if (err) {
@@ -17,7 +17,7 @@ router.get('/campgrounds/:id/comments/new', isLoggedIn , (req, res) => { // adde
     });
   });
   
-  router.post('/campgrounds/:id/comments', isLoggedIn , (req, res) => { // added isLoggedIn middleware
+  router.post('/', isLoggedIn , (req, res) => { // added isLoggedIn middleware
     // lookup campground using id
     Campground.findById(req.params.id, (err, campground) => {
       if (err) {
