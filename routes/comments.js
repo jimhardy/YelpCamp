@@ -1,11 +1,9 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams: true}); //allows us to access :id in the app.js file app.use for these routes
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
 
-// ==================
-// COMMENTS ROUTES
-// ==================
+// NEW COMMENT
 router.get('/new', isLoggedIn , (req, res) => { // added isLoggedIn middleware
     // find campground by id
     Campground.findById(req.params.id, (err, campground) => {
@@ -17,6 +15,7 @@ router.get('/new', isLoggedIn , (req, res) => { // added isLoggedIn middleware
     });
   });
   
+  // CREATE COMMENT
   router.post('/', isLoggedIn , (req, res) => { // added isLoggedIn middleware
     // lookup campground using id
     Campground.findById(req.params.id, (err, campground) => {

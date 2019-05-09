@@ -45,7 +45,6 @@ router.get('/', (req, res) => {
   
   // MIDDLEWARE
   // prevent user from adding comment if not logged in isAuth
-  
   function isLoggedIn(req , res , next){
     if(req.isAuthenticated()) {
     return next();

@@ -9,6 +9,7 @@ Comment = require('./models/comment'),
 User = require('./models/user'),
 seedDB = require('./seeds');
 
+// Requiring Routes
 const commentRoutes = require('./routes/comments'),
 campgroundRoutes = require('./routes/campgrounds'),
 indexRoutes = require('./routes/index');
@@ -24,9 +25,10 @@ app.use(
     saveUninitialized: false
     })
   );
-  app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+  
   // serve public directory - makes this available when server runs
-  app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
   
   // PASSPORT CONFIGURATION
 app.use(passport.initialize());
@@ -54,7 +56,6 @@ mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
     console.log('mongo connected');
   }
 });
-// mongoose.connect('mongodb://localhost:27017/yelp_camp', { useNewUrlParser: true });
 seedDB();
   
 // ==================
