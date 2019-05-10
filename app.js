@@ -6,8 +6,8 @@ LocalStrategy = require('passport-local'),
 passportLocalMongoose = require('passport-local-mongoose'),
 Campground = require('./models/campground'),
 Comment = require('./models/comment'),
-User = require('./models/user'),
-seedDB = require('./seeds');
+User = require('./models/user');
+// seedDB = require('./seeds');
 
 // Requiring Routes
 const commentRoutes = require('./routes/comments'),
@@ -53,10 +53,10 @@ mongoose.connect(process.env.MONGO, { useNewUrlParser: true }, err => {
   if (err) {
     console.log(err);
   } else {
-    console.log('mongo connected');
+    console.log('db connected');
   }
 });
-seedDB();
+// seedDB();
 
 // ==================
 // SERVER

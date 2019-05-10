@@ -28,6 +28,10 @@ router.get('/new', isLoggedIn , (req, res) => { // added isLoggedIn middleware
           if (err) {
             throw err;
           } else {
+            // add username and id to comment
+            comment.author.id = req.user._id;
+            comment.author.username = req.user.username;
+            comment.save() // save comment
             // connect new comment to campground comment array
             campground.comments.push(comment);
             campground.save();
