@@ -15,14 +15,18 @@ router.get('/', (req, res) => {
   });
   
   // CREATE - add new campground
-  router.post('/', (req, res) => {
+  router.post('/', isLoggedIn , (req, res) => {
     console.log('you have reached the post route');
     // get data from form
     var name = req.body.name;
     var image = req.body.image;
     var desc = req.body.description;
+    var author = {
+      id: req.user._id,
+      username: req.user.username
+    }
     // add to campgrounds collection
-    var newCampground = { name: name, image: image, description: desc };
+    var newCampground = { name: name, image: image, description: desc, author: author};
     Campground.create(newCampground, (err, campground) => {
       if (err) {
         console.log(err);
@@ -36,7 +40,7 @@ router.get('/', (req, res) => {
   });
   
   // NEW - show form to add new campground
-  router.get('/new', (req, res) => {
+  router.get('/new', isLoggedIn , (req, res) => {
     res.render('campgrounds/new');
   });
   
@@ -55,5 +59,15 @@ router.get('/', (req, res) => {
       });
     // render show template with that campground ID
   });
+
+     // MIDDLEWARE
+  // prevent user from adding comment if not logged in isAuth
+  
+  function isLoggedIn(req , res , next){
+    if(req.isAuthenticated()) {
+    return next();
+    }
+    res.redirect('/login');
+  }
 
   module.exports = router;

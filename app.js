@@ -4,8 +4,8 @@ mongoose = require('mongoose'),
 passport = require('passport'),
 LocalStrategy = require('passport-local'),
 passportLocalMongoose = require('passport-local-mongoose'),
-Campground = require('./models/campground'),
-Comment = require('./models/comment'),
+// Campground = require('./models/campground'),
+// Comment = require('./models/comment'),
 User = require('./models/user');
 // seedDB = require('./seeds');
 
