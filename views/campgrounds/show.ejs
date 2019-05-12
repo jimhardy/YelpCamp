@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <img class="card-img-top" src="<%= campground.image %>">
                     <div class="card-text">
-                        <h4 class="text-danger text-right">£30.00/night</h4>
+                        <h4 class="text-danger text-right">£<%= campground.price %>/night</h4>
                         <h4 class="card-title"><a><%= campground.name %></a></h4>
                         <p class="card-text"><%= campground.description %></p>
                         <p class="card-text"><em>Submitted by <%= campground.author.username %></em></p>
