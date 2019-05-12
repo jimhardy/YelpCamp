@@ -1,6 +1,7 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
+    flash = require('connect-flash'),
     passport = require('passport'),
     LocalStrategy = require('passport-local'),
     methodOverride = require('method-override'),
@@ -26,9 +27,8 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-// serve public directory - makes this available when server runs
-app.use(express.static(__dirname + '/public'));
-
+app.use(express.static(__dirname + '/public')); // serve public directory - makes this available when server runs
+app.use(flash());
 // PASSPORT CONFIGURATION
 app.use(passport.initialize());
 app.use(passport.session());
@@ -38,6 +38,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user; // whatever we put in res.locals is what is available inside of our template
+    res.locals.error = req.flash('error');
+    res.locals.success = req.flash('success');
     next();
 });
 
