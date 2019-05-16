@@ -17,3 +17,22 @@ body {
 .delete-form {
     display: inline;
 }
+
+.jumbotron {
+    margin-top: 2rem;
+}
+
+.campCard {
+    margin-bottom: 2rem;
+}
+
+.alert {
+    margin-top: 1rem;
+}
+
+.alert-success {
+    margin-top: 1rem;
+}
+.alert-error {
+    margin-top: 1rem;
+}
