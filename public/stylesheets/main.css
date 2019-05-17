@@ -1,43 +1,52 @@
 body {
-    background-color: rgb(240,240,240);
-}
-
-.card-body {
-    padding: 0;
-}
-
-.card-text {
-    padding: 9px;
-}
-
-.text-right {
-    padding-right: 9px;
-}
-
-.delete-form {
-    display: inline;
+	background-color: rgb(230, 230, 230);
 }
 
 .jumbotron {
-    margin-top: 2rem;
+    background-color: rbg(240 , 240 , 240);
+    box-shadow: 0px 0px 30px 10px rgba(30, 30, 30 , 0.1);
+}
+
+.card{
+    background-color: rbg(240 , 240 , 240);
+    box-shadow: 0px 0px 30px 10px rgba(30, 30, 30 , 0.1);
+}
+
+.card-body {
+	padding: 0;
+}
+
+.card-text {
+	padding: 9px;
+}
+
+.text-right {
+	padding-right: 9px;
+}
+
+.delete-form {
+	display: inline;
+}
+
+.jumbotron {
+	margin-top: 2rem;
 }
 
 .campCard {
-    margin-bottom: 2rem;
+	margin-bottom: 2rem;
 }
 
 .alert {
-    margin-top: 1rem;
+	margin-top: 1rem;
 }
 
 .alert-success {
-    margin-top: 1rem;
+	margin-top: 1rem;
 }
 .alert-error {
-    margin-top: 1rem;
+	margin-top: 1rem;
 }
 
-.loginForm {
-    width: 30%;
-    margin: 25px auto;
+form#loginForm {
+    margin: 1rem 2rem 1rem 2rem;
 }
