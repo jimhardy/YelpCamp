@@ -36,3 +36,8 @@ body {
 .alert-error {
     margin-top: 1rem;
 }
+
+.loginForm {
+    width: 30%;
+    margin: 25px auto;
+}
