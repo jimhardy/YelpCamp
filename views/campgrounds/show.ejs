@@ -1,76 +1,80 @@
 <% include ../partials/header %>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 <br>
-    <div class="card-group">
-        <div class="col-md-3">
-            <!--<div class="card">-->
-            <!--    <div class="card-body">-->
-                    <p class="lead">YelpCamp</p>
-                    <div class="list-group">
-                        <li class="list-group-item active">Info 1</li>
-                        <li class="list-group-item">Info 2</li>
-                        <li class="list-group-item">Info 3</li>
-                    </div>
-            <!--    </div>-->
-            <!--</div>-->
+<div class="card-group">
+    <div class="col-md-3">
+        <!--<div class="card">-->
+        <!--    <div class="card-body">-->
+        <p class="lead">YelpCamp</p>
+        <div class="list-group">
+            <li class="list-group-item active">Info 1</li>
+            <li class="list-group-item">Info 2</li>
+            <li class="list-group-item">Info 3</li>
         </div>
-        <div class="col-md-9">
-            <div class="card campCard">
-                <div class="card-body">
-                    <img class="card-img-top" src="<%= campground.image %>">
-                    <div class="card-text">
-                        <h4 class="text-danger text-right">£<%= campground.price %>/night</h4>
-                        <h4 class="card-title"><a><%= campground.name %></a></h4>
-                        <p class="card-text"><%= campground.description %></p>
-                        <p class="card-text"><em>Submitted by <%= campground.author.username %></em></p>
-                        <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
-                            <a class="btn btn-warning" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
-                            <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" class="delete-form">
-                            <button class="btn btn-danger">Delete</button>
-                            </form>
-                        <% } %>
-                    </div>
+        <!--    </div>-->
+        <!--</div>-->
+    </div>
+    <div class="col-md-9">
+        <div class="card campCard">
+            <div class="card-body">
+                <img class="card-img-top" src="<%= campground.image %>">
+                <div class="card-text">
+                    <h4 class="text-danger text-right">£<%= campground.price %>/night</h4>
+                    <h4 class="card-title"><a><%= campground.name %></a></h4>
+                    <p class="card-text"><%= campground.description %></p>
+                    <p>
+                        <em>Submitted by: <%= campground.author.username %>,
+                            <%= moment(campground.createdAt).fromNow() %></em>
+                    </p>
+                    <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+                    <a class="btn btn-sm btn-outline-info" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                    <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" class="delete-form">
+                        <button class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                    <% } %>
                 </div>
-                <div class="card">
-                    <h4 class="card-header">Comments
-                        <span>
-                            <a class="btn btn-success float-right" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
-                        </span>
-                    </h4>
-                    <div class="text-right">
-                         
-                    </div>
-                    <ul class="list-group">
+            </div>
+            <div class="card">
+                <h4 class="card-header">Comments
+                    <span>
+                        <a class="btn btn-success float-right"
+                            href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
+                    </span>
+                </h4>
+                <div class="text-right">
+
+                </div>
+                <ul class="list-group">
                     <% campground.comments.forEach((comment)=> {%>
-                        <li class="list-group-item">
-                            <div class="col-md-12">
-                                <strong><%= comment.author.username %></strong>
-                                <span class="far fa-star"></span>
-                                <span class="far fa-star"></span>
-                                <span class="far fa-star"></span>
-                                <span class="float-right text-muted">
-                                    10 days ago
-                                </span>
-                                <p class="card-text">
-                                    <%= comment.text %>
-                                </p>
-                                <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                                <a class="btn btn-xs btn-warning"
-                                 href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">
-                                 Edit
-                                </a>
-                                <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST" class="delete-form">
-                                <input type="submit" class="btn btn-xs btn-danger" value="Delete">
-                                </form>
-                                <% } %>
-                            </div>
-                        </li>
-                        <% }) %>
-                    </ul>
-                </div>
+                    <li class="list-group-item">
+                        <div class="col-md-12">
+                            <strong><%= comment.author.username %></strong>
+                            <span class="far fa-star"></span>
+                            <span class="far fa-star"></span>
+                            <span class="far fa-star"></span>
+                            <span class="float-right text-muted"><%= moment(comment.createdAt).fromNow() %></span>
+                            <p class="card-text">
+                                <%= comment.text %>
+                            </p>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                            <a class="btn btn-sm btn-outline-info"
+                                href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">
+                                Edit
+                            </a>
+                            <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE"
+                                method="POST" class="delete-form">
+                                <input type="submit" class="btn btn-sm btn-outline-danger" value="Delete">
+                            </form>
+                            <% } %>
+                        </div>
+                    </li>
+                    <% }) %>
+                </ul>
             </div>
         </div>
     </div>
+</div>
 
 
 

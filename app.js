@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(__dirname + '/public')); // serve public directory - makes this available when server runs
 app.use(flash());
+app.locals.moment = require('moment');
 // PASSPORT CONFIGURATION
 app.use(passport.initialize());
 app.use(passport.session());
