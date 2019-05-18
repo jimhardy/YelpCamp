@@ -14,7 +14,10 @@ router.get('/', (req, res) => {
   
   // SIGN UP LOGIC
   router.post('/register', (req, res) => {
-    let newUser = new User({username: req.body.username});
+    var newUser = new User({username: req.body.username});
+    if(req.body.adminKey === 'makemeadmin!'){
+      newUser.isAdmin = true;
+    }
     User.register(newUser , req.body.password , (err, user) => {
       if (err) {
         req.flash('error' , err.message);

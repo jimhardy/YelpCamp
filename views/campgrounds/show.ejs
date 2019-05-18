@@ -58,14 +58,17 @@
                                 <%= comment.text %>
                             </p>
                             <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
-                            <a class="btn btn-sm btn-outline-info"
-                                href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">
-                                Edit
-                            </a>
-                            <form action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE"
-                                method="POST" class="delete-form">
-                                <input type="submit" class="btn btn-sm btn-outline-danger" value="Delete">
-                            </form>
+                            <div class="float-right">
+                                <a class="btn btn-sm btn-outline-info"
+                                    href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">
+                                    Edit
+                                </a>
+                                <form
+                                    action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE"
+                                    method="POST" class="delete-form">
+                                    <input type="submit" class="btn btn-sm btn-outline-danger float-right" value="Delete">
+                                </form>
+                            </div>
                             <% } %>
                         </div>
                     </li>
