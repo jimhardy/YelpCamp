@@ -27,7 +27,7 @@
                         <em>Submitted by: <%= campground.author.username %>,
                             <%= moment(campground.createdAt).fromNow() %></em>
                     </p>
-                    <% if(currentUser && campground.author.id.equals(currentUser._id)){ %>
+                    <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                     <a class="btn btn-sm btn-outline-info" href="/campgrounds/<%= campground._id %>/edit">Edit</a>
                     <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST" class="delete-form">
                         <button class="btn btn-sm btn-outline-danger">Delete</button>
@@ -57,7 +57,7 @@
                             <p class="card-text">
                                 <%= comment.text %>
                             </p>
-                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
                             <div class="float-right">
                                 <a class="btn btn-sm btn-outline-info"
                                     href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">
@@ -66,7 +66,8 @@
                                 <form
                                     action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE"
                                     method="POST" class="delete-form">
-                                    <input type="submit" class="btn btn-sm btn-outline-danger float-right" value="Delete">
+                                    <input type="submit" class="btn btn-sm btn-outline-danger float-right"
+                                        value="Delete">
                                 </form>
                             </div>
                             <% } %>
