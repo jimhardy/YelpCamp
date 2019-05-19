@@ -114,28 +114,33 @@ router.put(
 	middleware.checkCampgroundOwnership,
 	upload.single("image"),
 	async (req, res) => {
-		let imageUpload = await imgURL(req);
-		console.log('uploaded image URL = ' + imageUpload);
-		if(imageUpload) {
-			req.body.campground.image = imageUpload;
-		}
-		console.log('req.body.campground.image = ' + req.body.campground.image )
-		await Campground.findByIdAndUpdate(
-			req.params.id,
-			req.body.campground,
-			err => {
-				if (err) {
-					req.flash(
-						"error",
-						"Something went wrong - please try again"
-					);
-					res.redirect("/campgrounds");
-				} else {
-					req.flash("success", "Campground updated!");
-					res.redirect("/campgrounds/" + req.params.id);
+		try {
+			if (req.file) {
+				req.body.campground.image = await imgURL(req);
+			} 
+			await Campground.findByIdAndUpdate(
+				req.params.id,
+				req.body.campground,
+				err => {
+					if (err) {
+						req.flash(
+							"error",
+							"Something went wrong - please try again"
+						);
+						res.redirect("/campgrounds");
+					} else {
+						req.flash("success", "Campground updated!");
+						res.redirect("/campgrounds/" + req.params.id);
+					}
 				}
-			}
-		);
+			);
+		} catch (e) {
+			req.flash(
+				"error",
+				"Something went wrong - please try again"
+			);
+			res.redirect("back");
+		}
 	}
 );
 
@@ -162,13 +167,13 @@ function escapeRegex(text) {
 	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
-
-// 
+//
 async function imgURL(req) {
+	let newImage;
 	await cloudinary.uploader.upload(req.file.path, result => {
-		console.log('imgURL from within imgURL function = ' + result.secure_url);
-		return result.secure_url;
-   });
+		newImage = result.secure_url;
+	});
+	return newImage;
 }
 
 module.exports = router;
