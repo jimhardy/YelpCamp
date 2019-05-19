@@ -113,15 +113,14 @@ router.put(
 	"/:id",
 	middleware.checkCampgroundOwnership,
 	upload.single("image"),
-	(req, res) => {
-		// // 
-		// let imgURL = cloudinary.uploader.upload(req.file.path, result => {
-		// 	// add cloudinary url for the image to the campground object under image property
-		// 	return result.secure_url;
-		// });
-		// console.log(imgURL);
-		// req.body.campground.image = imgURL;
-		Campground.findByIdAndUpdate(
+	async (req, res) => {
+		let imageUpload = await imgURL(req);
+		console.log('uploaded image URL = ' + imageUpload);
+		if(imageUpload) {
+			req.body.campground.image = imageUpload;
+		}
+		console.log('req.body.campground.image = ' + req.body.campground.image )
+		await Campground.findByIdAndUpdate(
 			req.params.id,
 			req.body.campground,
 			err => {
@@ -161,6 +160,15 @@ router.delete("/:id", middleware.checkCampgroundOwnership, (req, res) => {
 
 function escapeRegex(text) {
 	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
+
+// 
+async function imgURL(req) {
+	await cloudinary.uploader.upload(req.file.path, result => {
+		console.log('imgURL from within imgURL function = ' + result.secure_url);
+		return result.secure_url;
+   });
 }
 
 module.exports = router;
