@@ -3,18 +3,23 @@
     <h1 style="text-align: center;">Create a New Campground</h1>
     <div class="row">
         <div style="width: 30%; margin: 25px auto; ">
-            <form action="/campgrounds" method="POST">
+            <form action="/campgrounds" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
-                    <input class="form-control" type="text" name="name" placeholder="name">
+                    <label for="campName">Name of Campground</label>
+                    <input id="campName" class="form-control" type="text" name="campground[name]" placeholder="name">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="number" name="price" placeholder="price" min="0.01" step="0.01">
+                    <label for="campPrice">Cost Per Night</label>
+                    <input id="campPrice" class="form-control" type="number" name="campground[price]" placeholder="price" min="0.01" step="0.01">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" type="text" name="image" placeholder="image URL">
+                    <label for="campImage">Upload an Image</label>
+                    <input id="campImage" class="form-control" type="file" name="image" accept="image/*" required>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" type="text" name="description" placeholder="description" rows="4"></textarea>
+                    <label for="campDescription">Description</label>
+                    <textarea id="campDescription" class="form-control" type="text" name="campground[description]" placeholder="description"
+                        rows="4"></textarea>
                 </div>
                 <div class="form-group">
                     <button class="btn btn-lg btn-default btn-block btn-primary">Submit!</button>

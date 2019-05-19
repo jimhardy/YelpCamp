@@ -1,43 +1,16 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>YelpCamp</title>
-		<link
-			rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
-		/>
-		<link rel="stylesheet" href="/stylesheets/landing.css" />
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
-			type="text/javascript"
-			async
-		></script>
-	</head>
-	<body>
-
-		<div class="container landingAlert">
-			<% if(error && error.length > 0){ %>
-			<div class="alert alert-danger" role="alert">
-				<%= error %>
-			</div>
-			<% } %> <% if(success && success.length > 0){ %>
-			<div class="alert alert-success" role="alert">
-				<%= success %>
-			</div>
-			<% } %>
-		</div>
+<% include ./partials/header %>
 
 		<div id="landing-header">
 			<h1>Welcome to YelpCamp!</h1>
 			<p>
 				<form action="/campgrounds" method="GET" class="form-inline"> 
-					<div class="form-group">
-						<input type="text" name="search" placeholder="Search for a campground" class="form-control">
+					<div class="form-group mx-auto">
+						<input id="searchBar" type="text" name="search" placeholder="Search for a campground" class="form-control">
 						<input type="submit" value="search" class="btn btn-default" hidden>
 					</div>
 				</form>
 			</p>
-			<a href="/campgrounds" class="btn btn-lg btn-success">View All Campgrounds</a>
+			<a id="allCampgrounds" href="/campgrounds" class="btn btn-lg btn-success">View All Campgrounds</a>
 		</div>
 
 		<ul class="slideshow">
